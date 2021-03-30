@@ -5,3 +5,5 @@
 # Создание базы тестов для structure-aware фаззинга
 
 [Страничка с описанием требований к тестовому набору](https://github.com/ispras/TrustedDynamic/wiki)
+
+[Формализованные требования к описанию функции для тестового набора](https://github.com/DmitryJustDmitry/TrustedDynamic/blob/main/%D0%A2%D0%97%20%D0%BD%D0%B0%20SAF.docx)
