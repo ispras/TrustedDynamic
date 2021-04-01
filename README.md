@@ -6,4 +6,4 @@
 
 [Страничка с описанием требований к тестовому набору](https://github.com/ispras/TrustedDynamic/wiki)
 
-[Формализованные требования к описанию функции для тестового набора](https://github.com/DmitryJustDmitry/TrustedDynamic/ТЗ%20на%20SAF-кейс.md)
+[Формализованные требования к описанию функции для тестового набора](https://github.com/ispras/TrustedDynamic/ТЗ%20на%20SAF-кейс.md)
