@@ -4,6 +4,13 @@
 
 # Создание базы тестов для structure-aware фаззинга
 
-[Страничка с описанием требований к тестовому набору](https://github.com/ispras/TrustedDynamic/wiki)
+[Страничка на WIKI с описанием требований к тестовому набору](https://github.com/ispras/TrustedDynamic/wiki)
 
-[Формализованные требования к описанию функции для тестового набора](https://github.com/ispras/TrustedDynamic/ТЗ%20на%20SAF-кейс.md)
+[Как оформлять кейс](https://github.com/ispras/TrustedDynamic/ТЗ%20на%20SAF-кейс.md)
+
+# Статистика по интерпретатором
+
+| Язык | Версия | Окружение | Компания |
+|---|---|---|---|
+| C# | [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1) | - | [Аладдин Р.Д.](https://www.aladdin-rd.ru/company) |
+
