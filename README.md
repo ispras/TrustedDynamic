@@ -4,10 +4,7 @@
 
 # Создание базы тестов для structure-aware фаззинга
 
-[Страничка на WIKI с описанием требований к тестовому набору](https://github.com/ispras/TrustedDynamic/wiki)
+## [Structure-aware фаззинг](Doc/StructAware.md)
+## [Требования к подготовке тестов](Doc/Req.md) и [ТЗ](Doc/Tz.md)
+## [Статистика по интерпретаторам](Doc/Stats.md)
 
-# Статистика по интерпретатором
-
-| Язык | Версия | Окружение | Компания |
-|---|---|---|---|
-| C# | [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1) | - | [Аладдин Р.Д.](https://www.aladdin-rd.ru/company) |
