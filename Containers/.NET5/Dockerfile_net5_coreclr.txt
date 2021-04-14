@@ -1,1 +1,68 @@
+#Basic Image
+FROM ubuntu:20.04
+
+#Args for compliance of inner and outer uid and gid
+
+ARG cuid=1000
+ARG cgid=1000
+ARG cuidname=crusher
+ARG cgidname=crusher
+
+#Add group and user (like my HOST group and user)
+RUN groupadd -g $cgid $cgidname &&  useradd -m -u $cuid -g $cgidname -G sudo -s /usr/bin/bash $cuidname
+
+#Just a notes
+LABEL maintainer="ponomarev@fobos-nt.ru"
+LABEL version="1.0"
+LABEL description="net5 coreclr builder for afl Ubuntu 20"
+
+#Set Timezone or get hang during the docker build...
+ENV TZ=Europe/Moscow
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+#Install common system packages
+RUN apt update &&  apt-get install -y cmake  git make sudo wget build-essential python curl \
+gettext libicu-dev liblttng-ust-dev libssl-dev libnuma-dev ninja-build zlib1g-dev libkrb5-dev \
+lsb-release software-properties-common
+
+#Clone repos
+WORKDIR /home/$cuidname
+RUN git clone https://github.com/AFLplusplus/AFLplusplus
+RUN git clone https://github.com/dotnet/runtime
+
+#Install clang-12 compiler
+RUN wget https://apt.llvm.org/llvm.sh && chmod +x llvm.sh && sudo ./llvm.sh 12
+RUN update-alternatives --install /usr/bin/clang clang /usr/bin/clang-12 100 && \
+update-alternatives --install /usr/bin/clang++ clang++ /usr/bin/clang++-12 100 && \
+update-alternatives --install /usr/bin/c++ c++ /usr/bin/clang++-12 100 && \
+update-alternatives --install /usr/bin/cc cc /usr/bin/clang-12 100 && \
+update-alternatives --install /usr/bin/llvm-config llvm-config /usr/bin/llvm-config-12 100 && \
+update-alternatives --install /usr/bin/llvm-ar llvm-ar /usr/bin/llvm-ar-12 100 && \
+update-alternatives --install /usr/bin/llvm-nm llvm-nm /usr/bin/llvm-nm-12 100 && \
+update-alternatives --install /usr/bin/llvm-ranlib llvm-ranlib /usr/bin/llvm-ranlib-12 100 && \
+update-alternatives --install /usr/bin/llvm-link llvm-link /usr/bin/llvm-link-12 100 && \
+update-alternatives --install /usr/bin/llvm-objdump llvm-objdump /usr/bin/llvm-objdump-12 100
+
+#Build AFL++
+WORKDIR /home/$cuidname/AFLplusplus
+RUN make -j4
+
+#Build net5 with afl-clang-lto compiler and forming AUTODICTIONARY (just for test that the selected compiler works)
+WORKDIR /home/$cuidname/runtime
+RUN update-alternatives --install /usr/bin/cc cc /home/crusher/AFLplusplus/afl-clang-lto 110 && \
+update-alternatives --install /usr/bin/c++ c++ /home/crusher/AFLplusplus/afl-clang-lto++ 110 && \
+update-alternatives --install /usr/bin/clang++ clang++ /home/crusher/AFLplusplus/afl-clang-lto++ 110 && \
+update-alternatives --install /usr/bin/clang clang /home/crusher/AFLplusplus/afl-clang-lto 110
+
+RUN AFL_LLVM_DICT2FILE=/home/$cuidname/runtime/clr.dict AFL_PATH=/home/$cuidname/AFLplusplus/ ./build.sh --clang --os Linux --subset clr --verbosity detailed ; echo 0
+
+#Install extra packets for work
+#RUN apt-get install -y
+
+USER root
+
+#ENV cuidname=$cuidname
+#ENV cgidname=$cgidname
+
+CMD /bin/bash
 
