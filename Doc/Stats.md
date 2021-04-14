@@ -3,3 +3,4 @@
 | Язык | Версия | Окружение | Компания |
 |---|---|---|---|
 | C# | [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1) | - | [Аладдин Р.Д.](https://www.aladdin-rd.ru/company) |
+| C# | [.NET 5](https://github.com/dotnet/runtime) [.NET Core 3.1](https://dotnet.microsoft.com/download/dotnet/3.1) | Linux | [Фобос-НТ](https://fobos-nt.ru/sertifikatsionnye-ispytaniya/) |
