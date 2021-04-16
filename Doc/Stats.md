@@ -8,4 +8,5 @@
 | python | multiple | linux | kaspersky |
 | JS | multiple | - | kaspersky |
 | bash/sh | multiple | linux | kaspersky |
+| python | 3.9 | linux (fedora) | [ideco](https://ideco.ru/) |
 
