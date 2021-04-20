@@ -9,4 +9,5 @@
 | JS | multiple | - | kaspersky |
 | bash/sh | multiple | linux | kaspersky |
 | python | 3.9 | linux (fedora) | [ideco](https://ideco.ru/) |
+| java | 8, 11 | linux | [sercher](https://github.com/sercher/) |
 
