@@ -10,4 +10,5 @@
 | bash/sh | multiple | linux | kaspersky |
 | python | 3.9 | linux (fedora) | [ideco](https://ideco.ru/) |
 | java | 8, 11 | linux | [sercher](https://github.com/sercher/) |
+| C# | [.NET 5.0] | Windows | [АО Центр Атомзащитаинформ](http://xn--80aod7c.xn--p1ai/) |
 
