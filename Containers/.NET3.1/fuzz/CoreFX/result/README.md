@@ -33,3 +33,4 @@ docker run -ti -v $(pwd)/findings:/app/findings xmlserializer.deserialize
 ```
 
 Результаты [22_06_2021_findings.zip](XmlSerializer.Deserialize/22_06_2021_findings.zip)
+
