@@ -5,8 +5,7 @@ WORKDIR /build
 RUN apt update && \
     apt-get -y install libunwind8 libicu60 curl git clang-3.9 cmake make libc6-dev libssl-dev libkrb5-dev libcurl4-openssl-dev zlib1g-dev locales gcc wget apt-transport-https
 
-RUN apt-get download libssl1.0-dev && \
-    dpkg-deb -X libssl1.0-dev_1.0.2n-1ubuntu5.6_amd64.deb /
+RUN apt-get download libssl1.0-dev
 
 RUN locale-gen en_US.UTF-8
 
