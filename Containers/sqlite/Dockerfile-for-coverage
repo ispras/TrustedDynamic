@@ -1,0 +1,33 @@
+#Basic Image (выбран ubuntu 21.04 т.к. на нём выполняется фаззинг тестирование)
+FROM ubuntu:21.04 AS base_image
+
+#Сведения о контейнере
+LABEL maintainer="a.irkhin@gardatech.ru"
+LABEL version="1.0"
+LABEL description="Докер контейнер для фаззинга sqlite с применением AFL++ на Ubuntu 21.04"
+
+#запускаем обновление репозитория и устанавливаем с временной зоной tzdata (необходимо для следующих пакетов)
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" TZ="Russia/Moscow" apt-get install -y tzdata
+
+#ставим пакеты для установки sqlite и сборки покрытия (lcov)
+RUN apt-get -y install build-essential tcl git lcov
+
+#сборка sqlite
+WORKDIR /sourcecode
+RUN git clone https://github.com/sqlite/sqlite && cd sqlite && \
+    ./configure && make sqlite3.c
+
+#сборка фаззинг обёртки для sqlite
+WORKDIR /coverageapp
+RUN cp /sourcecode/sqlite/sqlite3.[ch] .; cp /sourcecode/sqlite/tool/fuzzershell.c .
+RUN gcc -g --coverage -O3 -o fuzzershell -DSQLITE_THREADSAFE=0 -DSQLITE_ENABLE_LOAD_EXTENSION=0 \ 
+-DSQLITE_DEBUG -DSQLITE_ENABLE_FTS4 -DSQLITE_ENABLE_RTREE -I. fuzzershell.c sqlite3.c -ldl
+RUN mkdir Testcases
+COPY Testcases/ ./Testcases
+
+
+CMD ./fuzzershell --oom --autovacuum -v --unique-cases unique-cases_fuzzershell.txt Testcases/* > log-fuzzershell.txt \ 
+&& lcov -t "sqlite3" -o sqlite3.info -c -d . \ 
+&& genhtml -o report-sqlite3 sqlite3.info \
+; cp unique-cases_fuzzershell.txt report-sqlite3/ \
+; cp log-fuzzershell.txt report-sqlite3/
